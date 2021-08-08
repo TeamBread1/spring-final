@@ -1,0 +1,56 @@
+[33mcommit 19ae6314799d737aafd7c62a2a9dff05f425bfb2[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Merge: fd26645 25b8161
+Author: inseo24 <84627144+inseo24@users.noreply.github.com>
+Date:   Sun Aug 8 21:45:58 2021 +0900
+
+    Merge pull request #1 from rlawnsdud05/master
+    
+    home api, contact-us api
+
+[33mcommit 25b8161a7398b5947b3a324dc0991209e342dabb[m
+Author: Junyoung Kim <rlawnsdud521@gmail.com>
+Date:   Sun Aug 8 15:33:03 2021 +0900
+
+    # create home api, contact api
+
+[33mcommit fd26645e1c9a61ebd491e15fada84cbe0d47f805[m
+Author: seoin <jnh02215@naver.com>
+Date:   Sun Aug 8 15:02:49 2021 +0900
+
+    1:1 complete
+
+[33mcommit e5c40da521f0dfa1232ce47810ce025d2c630af0[m
+Author: inseo24 <84627144+inseo24@users.noreply.github.com>
+Date:   Tue Aug 3 01:16:56 2021 +0900
+
+    Delete src/main/java/com/bbangduck/web directory
+    
+    delete file
+
+[33mcommit 07874c6b8a10b2082ba3b336816b62e00a6d1f94[m
+Author: inseo24 <84627144+inseo24@users.noreply.github.com>
+Date:   Tue Aug 3 01:16:45 2021 +0900
+
+    Delete src/main/java/com/bbangduck/service directory
+    
+    delet files
+
+[33mcommit 76770c1d46c93eab7d43feb865ae5e68ffc9cf5a[m
+Author: inseo24 <84627144+inseo24@users.noreply.github.com>
+Date:   Tue Aug 3 01:16:36 2021 +0900
+
+    Delete src/main/java/com/bbangduck/domain directory
+    
+    delete files
+
+[33mcommit 6d60e0fd0996de32eb7570cf17e2c736d09f4199[m
+Author: seoin <jnh02215@naver.com>
+Date:   Tue Aug 3 01:12:52 2021 +0900
+
+    change code in spring
+
+[33mcommit 92457ee25566a399aa5358129f6079f25fe6560e[m
+Author: seoin <jnh02215@naver.com>
+Date:   Mon Aug 2 17:44:35 2021 +0900
+
+    '1:1'
