@@ -1,4 +1,5 @@
 package com.bbangduck.onetoone;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,14 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 public class OnetooneController {
 	
-private OnetooneRepository repo;
+	private OnetooneRepository repo;
+	private AnswerRepository answerRepo;
 	
 	@Autowired
-	public OnetooneController(OnetooneRepository repo) {
+	public OnetooneController(OnetooneRepository repo, AnswerRepository answerRepo) {
 		this.repo = repo;
+		this.answerRepo = answerRepo;
 	}
 	
 	@GetMapping(value="/onetoone")
@@ -56,7 +60,7 @@ private OnetooneRepository repo;
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-		if(onetoone.getQnaContent() == null || onetoone.getQnaPwd().equals("")) {
+		if(onetoone.getQnaPwd() == null || onetoone.getQnaPwd().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 			
@@ -67,8 +71,21 @@ private OnetooneRepository repo;
 			
 		}
 		
-		onetoone.setQnaDate(new Date().getTime());
+
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm");
+		Date time = new Date();
+		String time1 = format.format(time);
+		
+		
+		onetoone.setQnaDate(time1);
+		onetoone.setQnaState("답변대기중");
+		onetoone.setQnaPic(onetoone.getQnaPic());
+		onetoone.setAnswerPwd("4321");
+
+		
 		return repo.save(onetoone);
+		
+		
 		
 		
 	}
@@ -111,14 +128,69 @@ private OnetooneRepository repo;
 			return null;
 		}
 		
+		if(onetoone.getQnaTitle()  == null || onetoone.getQnaTitle().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		
+		if(onetoone.getQnaAuthor() == null || onetoone.getQnaAuthor().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		if(onetoone.getQnaPwd() == null || onetoone.getQnaPwd().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+			
+		}
+
+		if(onetoone.getQnaPwd() == null || onetoone.getQnaPwd().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+			
+		}
+		
 		Onetoone toUpdateOnetoone = findedOnetoone.get();
 		toUpdateOnetoone.setQnaTitle(onetoone.getQnaTitle());
 		toUpdateOnetoone.setQnaAuthor(onetoone.getQnaAuthor());
 		toUpdateOnetoone.setQnaPwd(onetoone.getQnaPwd());
 		toUpdateOnetoone.setQnaContent(onetoone.getQnaContent());
+		toUpdateOnetoone.setQnaPic(onetoone.getQnaPic());
 
 		
 		return repo.save(toUpdateOnetoone);
+		
+	}
+	
+	@PostMapping(value = "/onetoone/{boardId}/answer")
+	public Answer addAnswer(@PathVariable int boardId, @RequestBody Answer answer, HttpServletResponse res) {
+		
+		
+		if(answer.getAnswerContent() == null || answer.getAnswerContent().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		
+		if(answer.getAnswerTitle() == null || answer.getAnswerTitle().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		
+
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm");
+		Date time = new Date();
+		String time1 = format.format(time);
+				
+		Onetoone onetoone = repo.findById(boardId).orElseThrow(() -> {
+			return new IllegalArgumentException("댓글 쓰기 실패: 게시글 번호를 찾을 수 없음");
+		});
+		
+		answer.setOnetoone(onetoone);		
+		answer.setAnswerDate(time1);
+		answer.setAnswerPic(answer.getAnswerPic());
+		onetoone.setQnaState("답변완료");
+		
+		return answerRepo.save(answer);
+		
 		
 	}
 
