@@ -1,12 +1,13 @@
 package com.bbangduck.community;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
 
 @RestController
 public class BoardController {
@@ -42,18 +41,37 @@ private BoardRepository repo;
 	public Board addBoard(@RequestBody Board board, HttpServletResponse res) {
 		
 		
-		if(board.getTitle()  == null || board.getTitle().equals("")) {
+		if(board.getPostTitle()  == null || board.getPostTitle().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 		
 		
 		
-		if(board.getContent() == null || board.getContent().equals("")) {
+		if(board.getPostContent() == null || board.getPostContent().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 			
 		}
+		
+		if(board.getPostPwd() == null || board.getPostPwd().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+			
+		}
+		
+		if(board.getPostAuthor() == null || board.getPostAuthor().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+			
+		}
+		
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm");
+		Date time = new Date();
+		String time1 = format.format(time);
+		
+		board.setPostDate(time1);
+
 		
 			return repo.save(board);
 		
@@ -98,9 +116,17 @@ private BoardRepository repo;
 			return null;
 		}
 		
+		if(board.getPostPwd() == null || board.getPostPwd().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+			
+		}
+		
 		Board toUpdateBoard = findedBoard.get();
-		toUpdateBoard.setTitle(board.getTitle());
-		toUpdateBoard.setContent(board.getContent());
+		toUpdateBoard.setPostTitle(board.getPostTitle());
+		toUpdateBoard.setPostContent(board.getPostContent());
+		toUpdateBoard.setPostPwd(board.getPostPwd());
+		toUpdateBoard.setPostAuthor(board.getPostAuthor());
 
 		
 		return repo.save(toUpdateBoard);
