@@ -6,21 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class WeeklyBestPostController {
+import com.bbangduck.community.BoardRepository;
 
-	private WeeklyBestPostRepository repo;
+@RestController
+public class HomeController {
+
+	private BoardRepository repo;
 
 	@Autowired
-	WeeklyBestPostController(WeeklyBestPostRepository repo) {
+	public HomeController(BoardRepository repo) {
 		this.repo = repo;
 	}
 
 	@GetMapping(value = "/home")
-	public List<Post> getWeeklyBestData() {
+	public List<Best6Post> getBest6Data() {
 
-//		return repo.getPostData();
-//		return repo.findAll(Sort.by("postLike").descending());
-		return repo.findWeeklyBestData();
+		return repo.findBest6Post();
 	}
+
 }
