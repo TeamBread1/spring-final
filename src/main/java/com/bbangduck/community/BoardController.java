@@ -54,19 +54,19 @@ public class BoardController {
 		if (board.getPostContent() == null || board.getPostContent().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
-
 		}
 
+		if (board.getPostTitle() == null || board.getPostTitle().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
 		if (board.getPostPwd() == null || board.getPostPwd().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
-
 		}
-
 		if (board.getPostAuthor() == null || board.getPostAuthor().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
-
 		}
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
