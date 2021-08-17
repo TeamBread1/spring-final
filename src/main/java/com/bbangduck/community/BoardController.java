@@ -116,11 +116,6 @@ public class BoardController {
 			return null;
 		}
 
-		if (board.getPostPwd() == null || board.getPostPwd().equals("")) {
-			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return null;
-
-		}
 
 		Board toUpdateBoard = findedBoard.get();
 		toUpdateBoard.setPostTitle(board.getPostTitle());
@@ -128,9 +123,12 @@ public class BoardController {
 		toUpdateBoard.setPostPwd(board.getPostPwd());
 		toUpdateBoard.setPostAuthor(board.getPostAuthor());
 		toUpdateBoard.setPostImage(board.getPostImage());
+		toUpdateBoard.setPostLike(board.getPostLike() + 1);
+
 
 		return repo.save(toUpdateBoard);
 
 	}
+	
 
 }
