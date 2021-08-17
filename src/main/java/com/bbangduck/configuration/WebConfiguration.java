@@ -14,5 +14,5 @@ public class WebConfiguration implements WebMvcConfigurer{
 		// 모든 원격지에 대해 모든 리소스와 메서드 허용
 		registry.addMapping("/**").allowedMethods("*");
 	}
-
+	
 }

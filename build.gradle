@@ -38,9 +38,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
 	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
 	
-
-	
-	
 }
 
 test {

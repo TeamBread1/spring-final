@@ -74,6 +74,8 @@ public class BoardController {
 		String time1 = format.format(time);
 
 		board.setPostDate(time1);
+		board.setPostLike(0);
+		board.setPostImage(board.getPostImage());
 
 		return repo.save(board);
 
@@ -125,6 +127,7 @@ public class BoardController {
 		toUpdateBoard.setPostContent(board.getPostContent());
 		toUpdateBoard.setPostPwd(board.getPostPwd());
 		toUpdateBoard.setPostAuthor(board.getPostAuthor());
+		toUpdateBoard.setPostImage(board.getPostImage());
 
 		return repo.save(toUpdateBoard);
 
