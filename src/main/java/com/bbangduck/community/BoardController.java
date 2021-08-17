@@ -71,6 +71,7 @@ private BoardRepository repo;
 		String time1 = format.format(time);
 		
 		board.setPostDate(time1);
+		board.setPostLike(0);
 
 		
 			return repo.save(board);
