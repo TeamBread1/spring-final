@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.bbangduck.home.Best6Post;
@@ -22,6 +21,4 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 	@Query(value = "SELECT id as id, post_title as postTitle, post_content as postContent, post_image as postImage FROM board order by post_like desc limit 6", nativeQuery = true)
 	List<Best6Post> findBest6Post();
 
-	@Query(value = "SELECT id, post_title as postTitle, post_content as postContent, post_date as postDate, post_author as postAuthor, post_image as postImage, post_like as postLike, post_pwd FROM board WHERE post_title LIKE %:keyword%", nativeQuery = true)
-	List<BoardWithoutComment> findKeywordMatchedData(@Param("keyword") String keyword);
 }
