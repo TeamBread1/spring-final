@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,12 +36,6 @@ public class BoardController {
 //		return repo.findAllWithCommentList();
 	}
 
-	@GetMapping(value = "/board/search")
-	public List<BoardWithoutComment> getMatchedPostList(@RequestParam String keyword) {
-
-		return repo.findKeywordMatchedData(keyword);
-	}
-
 	@PostMapping(value = "/board")
 	public Board addBoard(@RequestBody Board board, HttpServletResponse res) {
 
@@ -54,19 +47,19 @@ public class BoardController {
 		if (board.getPostContent() == null || board.getPostContent().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
-
 		}
 
+		if (board.getPostTitle() == null || board.getPostTitle().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
 		if (board.getPostPwd() == null || board.getPostPwd().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
-
 		}
-
 		if (board.getPostAuthor() == null || board.getPostAuthor().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
-
 		}
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -116,7 +109,6 @@ public class BoardController {
 			return null;
 		}
 
-
 		Board toUpdateBoard = findedBoard.get();
 		toUpdateBoard.setPostTitle(board.getPostTitle());
 		toUpdateBoard.setPostContent(board.getPostContent());
@@ -125,10 +117,8 @@ public class BoardController {
 		toUpdateBoard.setPostImage(board.getPostImage());
 		toUpdateBoard.setPostLike(board.getPostLike() + 1);
 
-
 		return repo.save(toUpdateBoard);
 
 	}
-	
 
 }
