@@ -100,14 +100,13 @@ public class BoardController {
 
 	@PutMapping(value = "/board/{id}")
 	public Board modifyBoard(@PathVariable Long id, @RequestBody Board board, HttpServletResponse res) {
-		Optional<BoardWithoutComment> findedBoard = repo.findByIdOnlyBoard(id);
-
+		Optional<Board> findedBoard = repo.findById(id);
+		System.out.println(board);
 		if (findedBoard.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
-
-		Board toUpdateBoard = (Board) findedBoard.get();
+		Board toUpdateBoard = findedBoard.get();
 		toUpdateBoard.setPostTitle(board.getPostTitle());
 		toUpdateBoard.setPostContent(board.getPostContent());
 		toUpdateBoard.setPostPwd(board.getPostPwd());
