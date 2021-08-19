@@ -73,9 +73,9 @@ public class BoardController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/board/{id}")
-	public BoardWithoutComment getBoard(@PathVariable Long id, HttpServletResponse res) {
-
-		Optional<BoardWithoutComment> board = repo.findByIdOnlyBoard(id);
+	public Board getBoard(@PathVariable Long id, HttpServletResponse res) {
+		System.out.println("api 호출 체크");
+		Optional<Board> board = repo.findById(id);
 		if (board.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
@@ -87,7 +87,7 @@ public class BoardController {
 	@DeleteMapping(value = "/board/{id}")
 	public boolean removeContact(@PathVariable Long id, HttpServletResponse res) {
 
-		Optional<BoardWithoutComment> board = repo.findByIdOnlyBoard(id);
+		Optional<Board> board = repo.findById(id);
 
 		if (board.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -112,10 +112,25 @@ public class BoardController {
 		toUpdateBoard.setPostPwd(board.getPostPwd());
 		toUpdateBoard.setPostAuthor(board.getPostAuthor());
 		toUpdateBoard.setPostImage(board.getPostImage());
-		toUpdateBoard.setPostLike(board.getPostLike() + 1);
+		toUpdateBoard.setPostLike(board.getPostLike());
 
 		return repo.save(toUpdateBoard);
 
+	}
+
+	@PutMapping(value = "/like/{id}")
+	public Board increaseLike(@PathVariable Long id, @RequestBody Board board, HttpServletResponse res) {
+		System.out.println("increase like api 호출");
+
+		Optional<Board> findedBoard = repo.findById(id);
+//		System.out.println(findedBoard.get());
+		if (findedBoard.isEmpty()) {
+			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		Board toUpdateBoard = findedBoard.get();
+		toUpdateBoard.setPostLike(board.getPostLike() + 1);
+		return repo.save(toUpdateBoard);
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import com.bbangduck.comment.Comment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,8 +48,9 @@ public class Board {
 	@Column(nullable = false)
 	private String postPwd;
 
+	@JsonIgnore
 	// OneToMany의 fetch기본값은 lazy
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
 	private List<Comment> comment;
 
 }
