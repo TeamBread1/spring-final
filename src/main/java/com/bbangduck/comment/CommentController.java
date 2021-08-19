@@ -37,8 +37,7 @@ public class CommentController {
 
 	@PostMapping(value = "/comment/{postNo}")
 	public Comment addComment(@PathVariable int postNo, @RequestBody Comment comment, HttpServletResponse res) {
-		System.out.println("게시글 번호 : " + postNo);
-		System.out.println("댓글 내용 : " + comment.getContent());
+
 		if (comment.getContent() == null || comment.getContent().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
@@ -56,13 +55,14 @@ public class CommentController {
 	@PutMapping(value = "/comment/{commentNo}")
 	public Comment modifyComment(@PathVariable int commentNo, @RequestBody Comment comment, HttpServletResponse res) {
 
-		Optional<Comment> findedComment = repo.findById(commentNo);
+		Optional<Comment> findedComment = repo.findByIdWithFetchJoin(commentNo);
 		if (findedComment.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 
 		Comment toUpdateComment = findedComment.get();
+
 		toUpdateComment.setContent(comment.getContent());
 		return repo.save(toUpdateComment);
 	}
