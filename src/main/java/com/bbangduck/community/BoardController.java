@@ -74,7 +74,7 @@ public class BoardController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/board/{id}")
 	public BoardWithoutComment getBoard(@PathVariable Long id, HttpServletResponse res) {
-//		Optional<Board> board = repo.findById(id);
+
 		Optional<BoardWithoutComment> board = repo.findByIdOnlyBoard(id);
 		if (board.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -87,7 +87,7 @@ public class BoardController {
 	@DeleteMapping(value = "/board/{id}")
 	public boolean removeContact(@PathVariable Long id, HttpServletResponse res) {
 
-		Optional<Board> board = repo.findById(id);
+		Optional<BoardWithoutComment> board = repo.findByIdOnlyBoard(id);
 
 		if (board.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -100,14 +100,14 @@ public class BoardController {
 
 	@PutMapping(value = "/board/{id}")
 	public Board modifyBoard(@PathVariable Long id, @RequestBody Board board, HttpServletResponse res) {
-		Optional<Board> findedBoard = repo.findById(id);
+		Optional<BoardWithoutComment> findedBoard = repo.findByIdOnlyBoard(id);
 
 		if (findedBoard.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 
-		Board toUpdateBoard = findedBoard.get();
+		Board toUpdateBoard = (Board) findedBoard.get();
 		toUpdateBoard.setPostTitle(board.getPostTitle());
 		toUpdateBoard.setPostContent(board.getPostContent());
 		toUpdateBoard.setPostPwd(board.getPostPwd());
