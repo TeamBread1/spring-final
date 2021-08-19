@@ -1,13 +1,10 @@
 package com.bbangduck.community;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,11 +12,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import com.bbangduck.comment.Comment;
-import com.bbangduck.heart.Heart;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +21,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Builder
 public class Board {
 
 	@Id
@@ -54,22 +47,8 @@ public class Board {
 	@Column(nullable = false)
 	private String postPwd;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	// OneToMany의 fetch기본값은 lazy
+	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Comment> comment;
-
-	@JsonIgnore
-	@OneToMany
-	@Builder.Default
-	private Set<Heart> hearts = new HashSet<>();
-
-	public void addHeart(Heart heart) {
-		this.hearts.add(heart);
-		heart.setBoard(this);
-	}
-
-	public void deleteHeart(Heart heart) {
-		this.hearts.remove(heart);
-		heart.setBoard(null);
-	}
 
 }

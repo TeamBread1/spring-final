@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
-	@Query(value = "SELECT no, content, pwd, post_no as postNo FROM comment order by no desc", nativeQuery = true)
+	@Query(value = "SELECT no, content, pwd, postNo FROM comment order by no desc", nativeQuery = true)
 	List<CommentWithPostNo> findAllWithPostNo();
+
+	@Query("select c from Comment c left join fetch c.board")
+	List<Comment> findAllWithFetchJoin();
 }

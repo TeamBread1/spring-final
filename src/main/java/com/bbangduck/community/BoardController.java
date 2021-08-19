@@ -32,8 +32,6 @@ public class BoardController {
 	public List<BoardWithoutComment> getBoardList() {
 
 		return repo.findAllOnlyBoard();
-//		return repo.findAllData();
-//		return repo.findAllWithCommentList();
 	}
 
 	@PostMapping(value = "/board")
@@ -75,9 +73,9 @@ public class BoardController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/board/{id}")
-	public Board getBoard(@PathVariable Long id, HttpServletResponse res) {
-		Optional<Board> board = repo.findById(id);
-
+	public BoardWithoutComment getBoard(@PathVariable Long id, HttpServletResponse res) {
+//		Optional<Board> board = repo.findById(id);
+		Optional<BoardWithoutComment> board = repo.findByIdOnlyBoard(id);
 		if (board.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;

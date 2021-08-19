@@ -30,8 +30,9 @@ public class CommentController {
 	}
 
 	@GetMapping(value = "/comment")
-	public List<CommentWithPostNo> getCommentList() {
-		return repo.findAllWithPostNo();
+	public List<Comment> getCommentList() {
+
+		return repo.findAllWithFetchJoin();
 	}
 
 	@PostMapping(value = "/comment/{postNo}")

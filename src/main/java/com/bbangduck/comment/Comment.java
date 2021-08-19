@@ -24,7 +24,7 @@ public class Comment {
 	private String content;
 	private String pwd;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postNo")
 	private Board board;
 }
